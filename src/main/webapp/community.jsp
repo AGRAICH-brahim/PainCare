@@ -56,7 +56,7 @@
                                 <a href="Home"><img src="assets/img/logo/logo-paincare.png" alt="" style="border-radius: 50%; width: 100px;"></a>
                             </div>
                         </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10 menu-main d-flex align-items-center justify-content-end" style="gap : 120px; font-size: 0;">
+                        <div class="col-xl-10 col-lg-10 col-md-10 menu-main d-flex align-items-center justify-content-end" style="gap : 10px; font-size: 0;">
                             <div class="menu-main d-flex align-items-center justify-content-center " >
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
@@ -75,7 +75,8 @@
                                             <li><a href="ScrappingServlet">News</a></li>                                       
                                             <li><a href="#">Services</a>
 	                                              <ul class="submenu">
-	                                                    <li><a href="test_endo.jsp">Test</a></li>
+	                                                           <li><a href="Test">Test1</a></li>
+	                                                    <li><a href="test_endo.jsp">Test2</a></li>
 	                                                    <li><a href="EvolutionPain">Evolution of pain</a></li>
 	                                                    <li><a href="suivi.jsp">Process</a></li>
 	                                              </ul>
@@ -102,7 +103,7 @@
 							            </div>
 							            <div class="handle">
 							              
-							                <p class=""><a href="Profile"> ${user.name}</a></p>
+							                <p class=""><a href="Profile"> ${user.name}   </a></p>
 							            </div>
 							        </div>
                                 
@@ -250,7 +251,7 @@
 								<p>${commentaire.content} </p>
 								</div>
 								<div class="pad-ver">
-								<c:if test="${commentaire.user_id == blog.user_id}">
+								<c:if test="${commentaire.user_id == user.getIdUser()}">
 												<form action="DeleteCommentaire"  method="post">
 											    		 <input type="hidden" name="commentid" value="${commentaire.id }" />
 											            <input type="submit" value="Supprimer"> 

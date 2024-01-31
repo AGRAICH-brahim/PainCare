@@ -61,7 +61,6 @@ public class UserDaoImp implements UserDao {
 		            preparedStatement.setString(2, user.getEmail());
 		            preparedStatement.setString(3, user.getPassword());
 		            preparedStatement.setTimestamp(4, user.getDateTime());
-System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
 		            // Exécuter la requête
 		            preparedStatement.executeUpdate();
 		        } catch (SQLException e) {

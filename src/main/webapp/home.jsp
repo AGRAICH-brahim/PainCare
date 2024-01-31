@@ -66,7 +66,7 @@
                                 <a href="Home"><img src="assets/img/logo/logo-paincare.png" alt="" style="border-radius: 50%; width: 100px;"></a>
                             </div>
                         </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10 menu-main d-flex align-items-center justify-content-end" style="gap : 120px; font-size: 0;">
+                        <div class="col-xl-10 col-lg-10 col-md-10 menu-main d-flex align-items-center justify-content-end" style="gap : 10px; font-size: 0;">
                             <div class="menu-main d-flex align-items-center justify-content-center " >
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
@@ -85,12 +85,13 @@
                                             <li><a href="ScrappingServlet">News</a></li>                                       
                                             <li><a href="#">Services</a>
 	                                              <ul class="submenu">
-	                                                    <li><a href="test_endo.jsp">Test</a></li>
+	                                              <li><a href="Test">Test1</a></li>
+	                                                    <li><a href="test_endo.jsp">Test2</a></li>
 	                                                    <li><a href="EvolutionPain">Evolution of pain</a></li>
 	                                                    <li><a href="suivi.jsp">Process</a></li>
 	                                              </ul>
                                             </li>
-						           <li><a href="AllBlogs">Community</a></li>
+						           <li ><a  href="AllBlogs">Community</a></li>
                                             <li><a href="contact.jsp">Contact</a></li>   
                                              <li>  
 												            <a><i class="bi bi-person-lines-fill"></i></a>   
@@ -112,7 +113,7 @@
 							            </div>
 							            <div class="handle">
 							              
-							                <p class=""><a href="Profile"> ${user.name}</a></p>
+							                <p style="width:100%; "><a href="Profile"> ${user.name} </a></p>
 							            </div>
 							        </div>
                                 
@@ -156,14 +157,14 @@
     
     <main>
         <!--? Slider Area Start-->
-         <div class="slider-area " style="min-height: 100vh;">
+         <div class="slider-area " style="min-height: 100vh; w">
             <div class="slider-active dot-style"  style="min-height: 100vh;">
             
                 <div class="single-slider d-flex align-items-center slider-height">
                     <div class="container">
                         <div class="row align-items-center">
                             <div style="display: flex; gap: 70PX; flex-direction: row; align-items: center; justify-content: space-between;" >
-                                <div style="gap: -90px; position: relative; top: -230px; " class="hero-wrapper">
+                                <div style="gap: -90px; position: relative; top: -230px; width: 60%; " class="hero-wrapper">
                                     <!-- Video icon -->
                                     <div class="video-icon">
                                         <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=NXQUl9aYcOY" data-animation="bounceIn" data-delay=".4s">
@@ -198,7 +199,7 @@
                                         <i style="--clr:#00ff0a;"></i>
                                         <i style="--clr:#ff0057;"></i>
                                         <i style="--clr:#fffd44;"></i>
-                                        <h2 style="color: #ff0057;">Faible</h2>
+                                        <h2 style="color: #ff0057;">${resultat.resultatTest}</h2>
                                     </div>
                                          <!--ring div ends here-->
                                          <style>

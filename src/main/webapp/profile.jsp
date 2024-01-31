@@ -56,7 +56,7 @@
                                 <a href="Home"><img src="assets/img/logo/logo-paincare.png" alt="" style="border-radius: 50%; width: 100px;"></a>
                             </div>
                         </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10 menu-main d-flex align-items-center justify-content-end" style="gap : 120px; font-size: 0;">
+                        <div class="col-xl-10 col-lg-10 col-md-10 menu-main d-flex align-items-center justify-content-end" style="gap : 10px; font-size: 0;">
                             <div class="menu-main d-flex align-items-center justify-content-center " >
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
