@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import paincare.entities.ScrapedData;
 import paincare.entities.UserEntity;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +34,24 @@ public class ScrappingServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+ 
+    // ...
+
+    private String extractImageUrlFromDataSrcs(String dataSrcs) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(dataSrcs);
+
+            // Extrait l'URL de la première clé (peut nécessiter des ajustements en fonction de votre structure JSON)
+            return jsonNode.fields().next().getKey();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,8 +66,8 @@ public class ScrappingServlet extends HttpServlet {
 
         // URL des pages à scraper
         String[] urls = {
+        		"https://www.businessinsider.com/s?q=endometrios",
                 "https://www.businessinsider.com/health",
-                "https://www.businessinsider.com/s?q=endometrios",
                 "https://www.dailysignal.com/?s=health",
                 "https://thechalkboardmag.com/"
         };
@@ -66,19 +86,31 @@ public class ScrappingServlet extends HttpServlet {
                		 String title = article.select("h2 > a").text();
                		 String paragraphe = article.select(".tout-copy").text();
                		String date = article.select(".tout-tag span").text();
-               		 String relativeLink = article.select("h2 > a").attr("href");
-        		        
-               		Element image = article.select(".tout-image-wrapper .lazy-holder img").first();
-               	 String imageUrl = article.select(".tout-image-wrapper .lazy-holder img").attr("src");
-                 System.out.println("=============================");	
-       	      System.out.println(imageUrl);
-       	      System.out.println(title);
-       	   System.out.println("date date " + date);
-         	      System.out.println("=============================");
-         	     ScrapedData scrapedDataItem = new ScrapedData(title, paragraphe, imageUrl, relativeLink, date);
-  		       scrapedDataList.add(scrapedDataItem);
+               	 String absoluteLink = article.select("h2 > a").attr("href");
+
+ 		        // Construire l'URL absolue en combinant l'URL de base et le lien relatif
+ 		        String relativeLink = "https://www.businessinsider.com" + absoluteLink;
+               		 
+               	  Element image = article.select(".tout-image-wrapper .lazy-holder img").first();
+               	  
+  		        String imageUrl = null ;
+  		        
+  		        if (image != null) {
+  		            String imageSrc = image.attr("data-srcs");
+  		            imageUrl = extractImageUrlFromDataSrcs(imageSrc);
+  		            System.out.println("Image not found for article: " + imageUrl + date + relativeLink);
+
+  		            // ...
+  		            ScrapedData scrapedDataItem = new ScrapedData(title, paragraphe, imageUrl, relativeLink, date);
+  		            scrapedDataList.add(scrapedDataItem);
+
+  		        } else {
+  		            // Gérer le cas où l'image n'est pas trouvée
+  		            System.out.println("Image not found for article: " + title);
+  		        }
 	                }
                 }
+                
                 if (url.equals("https://www.businessinsider.com/health")){
                 	articles = doc.select(".river-item");
                 	
@@ -90,12 +122,23 @@ public class ScrappingServlet extends HttpServlet {
 
         		        // Construire l'URL absolue en combinant l'URL de base et le lien relatif
         		        String relativeLink = "https://www.businessinsider.com" + absoluteLink;
-        		        
-        		        Element image = article.select(".tout-image-wrapper .lazy-holder img").first();
-        		        String imageUrl = article.select(".tout-image-wrapper .lazy-holder img").attr("src");
 
-        		       ScrapedData scrapedDataItem = new ScrapedData(title, paragraphe, imageUrl, relativeLink, date);
-        		       scrapedDataList.add(scrapedDataItem);
+        		        Element image = article.select(".tout-image-wrapper .lazy-holder img").first();
+        		        String imageUrl = null ;
+        		        
+        		        if (image != null) {
+        		            String imageSrc = image.attr("data-srcs");
+        		            imageUrl = extractImageUrlFromDataSrcs(imageSrc);
+
+        		            // ...
+        		            ScrapedData scrapedDataItem = new ScrapedData(title, paragraphe, imageUrl, relativeLink, date);
+        		            scrapedDataList.add(scrapedDataItem);
+
+        		        } else {
+        		            // Gérer le cas où l'image n'est pas trouvée
+        		            System.out.println("Image not found for article: " + title);
+        		        }
+
 	                }
                 }
                 if (url.equals("https://thechalkboardmag.com/")){
@@ -126,9 +169,7 @@ public class ScrappingServlet extends HttpServlet {
                 		 Element image = article.select(".tout-image-wrapper img").first();
                 		 String imageUrl = image != null ? image.absUrl("src") : "N/A";
 
-         		      System.out.println("=============================");
-         		       System.out.println(title  + "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZ" + paragraphe + "RRRRRRRRRRRRRR" + relativeLink + "RRRRRRRRRRRRR"  + imageUrl);
-         		      System.out.println("=============================");
+         		   
          		     ScrapedData scrapedDataItem = new ScrapedData(title, paragraphe, imageUrl, relativeLink, date);
          		    scrapedDataList.add(scrapedDataItem);
  	                }
@@ -141,7 +182,7 @@ public class ScrappingServlet extends HttpServlet {
                 request.setAttribute("scrapedDataList", scrapedDataList);
 
                 for (ScrapedData data : scrapedDataList) {
-                    System.out.println(data.getImageUrl());
+                    System.out.println(data.getImageUrl() + data.getDate());
                 }
     		    // Dispatcher vers la JSP
     		    RequestDispatcher dispatcher = request.getRequestDispatcher("/article.jsp");

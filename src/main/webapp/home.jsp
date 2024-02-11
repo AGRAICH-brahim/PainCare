@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.Base64" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
 
 <!doctype html>
 
@@ -109,11 +113,18 @@
                                  </div>
                                   	<div class="create justify-content-center">
 							            <div class="profile-pic">
-							                <img src="assets/img/logo/profile-8.jpg" alt="pic 1" />
+							                <c:choose>
+												    <c:when test="${not empty sessionuser.image}">
+												        	<img   src="data:image/png;base64,${Base64.getEncoder().encodeToString(sessionuser.image)}" alt="Image de l'utilisateur">
+												    </c:when>
+												    <c:otherwise>
+												 		<img src="assets/img/icon/profile-par-defaut.webp" alt="profile par defaut">
+												    </c:otherwise>
+												</c:choose>
 							            </div>
 							            <div class="handle">
 							              
-							                <p style="width:100%; "><a href="Profile"> ${user.name} </a></p>
+							                <p style="width:100%; "><a href="Profile"> ${sessionuser.name} </a></p>
 							            </div>
 							        </div>
                                 

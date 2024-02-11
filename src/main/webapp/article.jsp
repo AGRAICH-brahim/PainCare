@@ -178,10 +178,11 @@
     <c:if test="${not empty data.date}">
                         <article class="blog_item">
                             <div class="blog_item_img">
-                                <img class="card-img rounded-0" src="https://i.insider.com/6577462b0ec98e92f74e2982?width=1300&format=jpeg&auto=webp" alt="">
+                                <img class="card-img rounded-0" src="${data.getImageUrl()}" alt="">
                                 <a href="#" class="blog_item_date">
                                     
                                     <H4>${data.date}</H4>
+                                    <p>${data.getImageUrl()}</p>
                                 </a>
                             </div>
                             <div class="blog_details">
